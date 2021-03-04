@@ -130,3 +130,10 @@ dmypy.json
 
 # VSCode File
 .vscode/
+
+# venv
+venv_streamlit_covid/
+
+# data
+
+.csv
