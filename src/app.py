@@ -81,10 +81,10 @@ regions_list = ['NORTH',
                 'SOUTHEAST',
                 'NORTHEAST']                    
 
-
+@st.cache
 def load_data(path):
-    data_2019 = pd.read_csv(path)
-    return data_2019
+    data  = pd.read_csv(path)
+    return data
 
 def plot_comparation_graph(data_2019,
                            data_2020,
@@ -148,10 +148,10 @@ def main():
 
 
     st.title('My first Streamlit webapp!')
-    st.markdown('COVID-19 deaths analysis **2019 - 2021**')
+    st.markdown('Deaths analysis in Brazil - **2019 - 2020**')
 
     pDisease = st.sidebar.selectbox('Select the disease type', disease_types)
-    pState = st.sidebar.selectbox('Select the state', states)
+    pState = st.sidebar.selectbox('Select an Brazilian state', states)
 
     figure = plot_comparation_graph(data_2019,
                                 data_2020,
@@ -160,8 +160,6 @@ def main():
                                 pState)
 
     st.pyplot(figure)
-
-    st.text('2019 Data')
 
 if __name__ == '__main__':
     main()
