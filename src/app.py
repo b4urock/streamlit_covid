@@ -131,7 +131,7 @@ def plot_comparation_graph(data_2019,
     ax = sns.barplot(x = 'Year' , y = 'Total', data = data, palette= palette)
  
     ax.set_title(f'Cause of death - {death_cause} - {title}')
-    ylabels = ['{:,.0f}'.format(y) + ' K' for y in ax.get_yticks()/1000]
+    ylabels = ['{:,.2f}'.format(y) + ' K' for y in ax.get_yticks()/1000]
     #ax.grid()
     ax.set_yticklabels(ylabels)
 
