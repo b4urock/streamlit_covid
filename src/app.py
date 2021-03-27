@@ -147,8 +147,8 @@ def main():
     states = np.append(data_2021['uf'].unique(),'BRASIL')
 
 
-    st.title('Deaths by diseases in Brazil per states')
-    st.markdown('Deaths analysis - **2019 - 2020**')
+    st.title('Deaths by diseases in Brazil')
+    st.markdown('Deaths analysis per state - **2019 - 2020**')
 
     pDisease = st.sidebar.selectbox('Select the disease type', disease_types)
     pState = st.sidebar.selectbox('Select a Brazilian state', states)
