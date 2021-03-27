@@ -124,15 +124,15 @@ def plot_comparation_graph(data_2019,
     data = pd.DataFrame({'Total': disease_list,
                          'Year': [2019, 2020]})
 
-    sns.set(style="darkgrid")   
+    sns.set_style("white")   
     palette = sns.color_palette("hls", 8) 
     fig, ax = plt.subplots(figsize=(8, 5))
 
     ax = sns.barplot(x = 'Year' , y = 'Total', data = data, palette= palette)
  
     ax.set_title(f'Cause of death - {death_cause} - {title}')
-    ylabels = ['{:,.2f}'.format(y) + ' K' for y in ax.get_yticks()/1000]
-    ax.grid()
+    ylabels = ['{:,.0f}'.format(y) + ' K' for y in ax.get_yticks()/1000]
+    #ax.grid()
     ax.set_yticklabels(ylabels)
 
     return fig
@@ -147,11 +147,11 @@ def main():
     states = np.append(data_2021['uf'].unique(),'BRASIL')
 
 
-    st.title('My first Streamlit webapp!')
-    st.markdown('Deaths analysis in Brazil - **2019 - 2020**')
+    st.title('Deaths by diseases in Brazil by states')
+    st.markdown('Deaths analysis - **2019 - 2020**')
 
     pDisease = st.sidebar.selectbox('Select the disease type', disease_types)
-    pState = st.sidebar.selectbox('Select an Brazilian state', states)
+    pState = st.sidebar.selectbox('Select a Brazilian state', states)
 
     figure = plot_comparation_graph(data_2019,
                                 data_2020,
