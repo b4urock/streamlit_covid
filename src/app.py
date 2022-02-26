@@ -143,13 +143,9 @@ def plot_comparation_graph(data_2019,
 
 def main():
 
-   # data_2019 = load_data('data/obitos-2019.csv')
-   # data_2020 = load_data('data/obitos-2020.csv') 
-   # data_2021 = load_data('data/obitos-2021.csv')    
-   # 
-    data_2019 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2019.csv')
-    data_2020 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2020.csv')
-    data_2021 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2021.csv')
+    data_2019 = load_data('data/obitos-2019.csv')
+    data_2020 = load_data('data/obitos-2020.csv') 
+    data_2021 = load_data('data/obitos-2021.csv')    
 
     disease_types = data_2021['tipo_doenca'].unique().tolist()
     states = np.append(data_2021['uf'].unique(),'BRASIL').tolist()
