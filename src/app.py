@@ -13,7 +13,7 @@ RegionStates = {#North
                 'PA': 'North',
                 'TO': 'North',
                 'RO': 'North',
-                'AC': 'North',
+                'AC': 'North', 
                 #Northeast
                 'MA': 'Northeast',
                 'PI': 'Northeast',
@@ -98,6 +98,7 @@ def plot_comparation_graph(data_2019,
         total_2021 = data_2021.groupby(['tipo_doenca']).sum()
 
         disease_list = [int(total_2019.loc[death_cause]), 
+                        int(total_2020.loc[death_cause]),
                         int(total_2020.loc[death_cause])]
         title = 'in Brazil'
     elif state.upper() in regions_list:
@@ -107,7 +108,8 @@ def plot_comparation_graph(data_2019,
         total_2021 = data_2021.groupby(['region','tipo_doenca']).sum()
 
         disease_list = [int(total_2019.loc[state, death_cause] if (state, death_cause) in total_2019.index else 0),
-                        int(total_2020.loc[state, death_cause] if (state, death_cause) in total_2020.index else 0)]        
+                        int(total_2020.loc[state, death_cause] if (state, death_cause) in total_2020.index else 0),
+                        int(total_2021.loc[state, death_cause] if (state, death_cause) in total_2021.index else 0)]        
       
         title = f'in the {state.lower()} region'        
 
@@ -117,12 +119,13 @@ def plot_comparation_graph(data_2019,
         total_2021 = data_2021.groupby(['uf','tipo_doenca']).sum()
 
         disease_list = [int(total_2019.loc[state, death_cause] if (state, death_cause) in total_2019.index else 0),
-                        int(total_2020.loc[state, death_cause] if (state, death_cause) in total_2020.index else 0)]        
+                        int(total_2020.loc[state, death_cause] if (state, death_cause) in total_2020.index else 0),
+                        int(total_2021.loc[state, death_cause] if (state, death_cause) in total_2021.index else 0)]        
       
         title = f'in the state of {state.upper().replace(state, States[state])}'
 
     data = pd.DataFrame({'Total': disease_list,
-                         'Year': [2019, 2020]})
+                         'Year': [2019, 2020, 2021]})
 
     sns.set_style("white")   
     palette = sns.color_palette("hls", 8) 
@@ -133,25 +136,34 @@ def plot_comparation_graph(data_2019,
     ax.set_title(f'Cause of death - {death_cause} - {title}')
     ylabels = ['{:,.2f}'.format(y) + ' K' for y in ax.get_yticks()/1000]
     #ax.grid()
+
     ax.set_yticklabels(ylabels)
 
     return fig
 
 def main():
 
-    data_2019 = load_data('data/obitos-2019.csv')
-    data_2020 = load_data('data/obitos-2020.csv') 
-    data_2021 = load_data('data/obitos-2021.csv')     
+   # data_2019 = load_data('data/obitos-2019.csv')
+   # data_2020 = load_data('data/obitos-2020.csv') 
+   # data_2021 = load_data('data/obitos-2021.csv')    
+   # 
+    data_2019 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2019.csv')
+    data_2020 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2020.csv')
+    data_2021 = load_data('C:\Dev\GitHub\streamlit_covid\data\obitos-2021.csv')
 
-    disease_types = data_2021['tipo_doenca'].unique()
-    states = np.append(data_2021['uf'].unique(),'BRASIL')
+    disease_types = data_2021['tipo_doenca'].unique().tolist()
+    states = np.append(data_2021['uf'].unique(),'BRASIL').tolist()
 
 
     st.title('Deaths by diseases in Brazil')
-    st.markdown('Deaths analysis per state - **2019 - 2020**')
+    st.markdown('Deaths analysis per state / country - **2019 - 2021**')
+    st.markdown('app by Pablo Pereira')
 
-    pDisease = st.sidebar.selectbox('Select the disease type', disease_types)
-    pState = st.sidebar.selectbox('Select a Brazilian state', states)
+    default_ix1 = disease_types.index('SRAG')
+    default_ix2 = states.index('BRASIL')
+
+    pDisease = st.sidebar.selectbox('Select the disease type', disease_types, index=default_ix1)
+    pState = st.sidebar.selectbox('Select a Brazilian state', states, index=default_ix2)
 
     figure = plot_comparation_graph(data_2019,
                                 data_2020,
